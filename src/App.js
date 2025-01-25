@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Todo from "./Todo";
-import { query, collection, onSnapshot, updateDoc, doc, addDoc } from "firebase/firestore";
+import { query, collection, onSnapshot, updateDoc, doc, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
       text: input,
       completed: false,
     })
+    setInput('')
   }
 
   useEffect(() => {
@@ -38,6 +39,10 @@ function App() {
     })
   }
 
+  const deleteTodo = async (id) => {
+    await deleteDoc(doc(db, 'todos', id))
+  }
+
 
   return (
     <div>
@@ -55,11 +60,11 @@ function App() {
         </form>
         <ul>
           {todos.map((todo, index)=> (
-            <Todo key={index} todo={todo} toggleComplete={toggleComplete}/>
+            <Todo key={index} todo={todo} toggleComplete={toggleComplete} deleteTodo={deleteTodo}/>
           ))}
         
         </ul>
-        <p>2 Tasks</p>
+        {todos.length < 1 ? null : <p>{`${todos.length} Tasks`}</p>}
       </div>
     </div>
   );

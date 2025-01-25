@@ -6,14 +6,14 @@ const style = {
   }
 }
 
-const Todo = ({todo, toggleComplete}) => {
+const Todo = ({todo, toggleComplete, deleteTodo}) => {
   return (
     <li>
       <div>
         <input onChange={() => toggleComplete(todo)} type="checkbox" checked={todo.completed ? 'checked' : ''} />
         <p onClick={() => toggleComplete(todo)} style={todo.completed ? style.textComplete : {}}>{todo.text}</p>
       </div>
-      <button>-</button>
+      <button onClick={() => deleteTodo(todo.id)}>-</button>
     </li>
   )
 }
