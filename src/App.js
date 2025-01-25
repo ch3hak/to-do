@@ -43,7 +43,6 @@ function App() {
     await deleteDoc(doc(db, 'todos', id))
   }
 
-
   return (
     <div>
       <div>
